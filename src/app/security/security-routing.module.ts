@@ -5,15 +5,23 @@
  */
 
 // imports statements
-import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
-import { SecurityComponent } from './security.component';
+import { NgModule } from "@angular/core";
+import { RouterModule, Routes } from "@angular/router";
+import { SigninComponent } from "./signin/signin.component";
+import { SecurityComponent } from "./security.component";
 
+//routes for security module components
 const routes: Routes = [
   {
     path: '',
     component: SecurityComponent,
-    title: 'Nodebucket: Security'
+    children: [
+      {
+        path: 'signin',
+        component: SigninComponent,
+        title: 'Nodebucket Sign In'
+      }
+    ]
   }
 ];
 
@@ -21,4 +29,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class SecurityRoutingModule { }
+export class SecurityRouteingModule { }

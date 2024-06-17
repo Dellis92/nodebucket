@@ -27,10 +27,10 @@ export class NavComponent {
     this.appUser = {} as AppUser // Create an empty appUser object
     this.isSignedIn = this.cookieService.get('session_user') ? true : false // Check if the user is signed in
 
-    // if the user is signed in, tset the appUser object to the session name
+    // if the user is signed in, test the appUser object to the session name
     if(this.isSignedIn) {
       this.appUser = {
-        fullName: this.cookieService.get('session_name')
+        fullName: this.cookieService.get('session_user')
       }
       console.log('Signed in as', this.appUser.fullName)
     }

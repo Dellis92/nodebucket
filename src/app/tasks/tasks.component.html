@@ -1,38 +1,53 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial -scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie-edge">
-    <title>Nodebucket Homepage</title>
-  </head>
+<div class="tasks-container">
 
-  <body>
+  <h1>My Tasks</h1>
 
-    <h1>Nodebucket</h1>
+  <!--Tasks Form-->
+  <form #taskForm="ngForm" (ngSubmit)="createTask(taskForm); taskForm.reset();" class="tasks-form">
+    <input type="text" name="task" ngModel required placeholder="Enter a new task">
+    <input type="submit" value="Add Task">
+  </form>
 
-    <div class="container">
-      <div class="addTask">
-        <input type="text" placeholder="Add a Task">
-        <button>Add</button>
+  <!--Tasks Container-->
+  <div class="tasks-columns">
+
+    <!--tasks todo column-->
+    <div class="tasks-column">
+      <h2>To Do</h2>
+
+      <div class="tasks-box">
+
+
+        <div *ngIf="todo.length === 0 || !todo" class="no-tasks">
+        No tasks to do yet!
+        </div>
+
+        <!--tasks card-->
+        <div *ngFor="let item of todo" class="tasks-card">
+          {{ item.text }}
+        </div>
+
       </div>
 
-      <ol class="notCompleted">
-        <h3> Not Completed</h3>
-        <li>Task
-          <button><i class="fa fa-check">Add</i></button>
-          <button><i class="fa fa-trash">Del</i></button>
-        </li>
-      </ol>
-
-      <ol class="Completed">
-        <h3>Completed</h3>
-        <li>Task
-          <button><i class="fa fa-trash">Del</i></button>
-        </li>
-      </ol>
     </div>
 
-    <script src="tasks.js"></script>
-  </body>
-</html>
+    <!--tasks done columns-->
+    <div class="tasks-column">
+      <h2>Done</h2>
+
+      <div class="tasks-box">
+
+        <div *ngIf="done.length === 0 || !done" class="no-tasks">
+          No tasks done yet!
+          </div>
+
+          <!--tasks card-->
+        <div *ngFor="let item of done" class="tasks-card">
+          {{ item.text }}
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+</div>

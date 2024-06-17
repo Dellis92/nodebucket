@@ -1,100 +1,46 @@
-*{
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-body{
-  background: #37333E;
-}
-
-.container {
-  position: relative;
-  max-width: 800px;
-  padding: 10px;
+.tasks-container {
+  width: 100%;
+  max-width: 960px;
   margin: 0 auto;
 }
 
-.addTask {
-  width: 100%;
+.tasks-columns {
   display: flex;
-  padding: 10px 0;
+  justify-content: space-between;
 }
 
-.addTask > input[type="text"]{
-  width:90%;
-  color: #A19A99;
-  border: none;
-  border-bottom: 2px solid #A19A99;
-  background: none;
-  padding: 10px;
-  font-size: 22px;
-  outline: none;
-}
-
-.addTask button{
-  margin: 0 10px;
-  background: #222;
-  color: #A19A99;
-  font-size: 18px;
-  text-transform: uppercase;
-  padding: 10px;
-  border: none;
-  outline: none;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-.notCompleted, .Completed {
-  margin: 5px 0;
-  padding: 20px;
-}
-
-h3 {
-  font-size: 28px;
-  text-transform: uppercase;
+.tasks-column {
+  width: 45%;
   text-align: center;
-  color:#37333E;
 }
 
-ol{
-  list-style: none;
+.tasks-box {
+  border: 1px solid #ccc;
+  padding: 10px;
+  min-height: 300px;
 }
 
-ol li{
+.tasks-form {
   width: 100%;
-  padding: 18px;
-  margin: 5px 0;
-  background: #83807E;
-  font-size: 22px;
-  counter-increment: my-counter;
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: space-between;
 }
 
-ol.Completed li{
-  background:#83807E;
+.tasks-form input[type="text"] {
+  flex-grow: 1;
 }
 
-ol li::before{
-  content: counter(my-counter);
-  background: #37333E;
-  width: 2rem;
-  height: 2rem;
-  border-radius: 50%;
-  display: inline-block;
-  line-height: 2rem;
+.no-tasks {
   text-align: center;
-  color:#A19A99;
-  margin-right: 0.5rem;
+  margin-top: 20%;
 }
 
-li button{
-  float: right;
-  padding: 5px;
-  font-size: 18px;
-  line-height: 28px;
-  margin-right: 15px;
-  background: #F9F8F9;
-  border: none;
-  outline: none;
-  cursor: pointer;
+.tasks-card {
+  border: 1px solid #ddd;
+  background-color: #f9f9f9;
+  border-radius: 4px;
+  padding: 10px;
+  margin-bottom: 10px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.15);
 }

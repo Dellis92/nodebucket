@@ -10,7 +10,7 @@
   data-bs-target="#navbarResponsive"
   aria-controls="navbarResponsive"
   aria-expanded="false"
-  aria-label="Togle navigation"
+  aria-label="Toggle navigation"
   >
     <span class="navbar-toggler-icon"></span>
 </button>
@@ -22,15 +22,15 @@
       <a routerLink="/home" class="nav-link">Home</a>
     </li>
     <li>
-      <a routerLink="#" class="nav-link">About Us</a>
+      <a routerLink="/about" class="nav-link">About Us</a>
     </li>
     <li>
-      <a routerLink="#" class="nav-link">Contact Us</a>
+      <a routerLink="/contact" class="nav-link">Contact Us</a>
     </li>
 
     <li *ngIf="isSignedIn" class="nav-item dropdown">
     <a
-      href="#"
+      href="/signin.component.html"
       class="nav-link pe-3"
       id="navbarDropdown"
       role="button"

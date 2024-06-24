@@ -1,3 +1,8 @@
+/**
+ * DeVonte Ellis'
+ * 06-20-2024
+ */
+
 "use strict";
 
 const express = require("express");
@@ -14,12 +19,14 @@ const router = express.Router();
 //Valid: http://localhost:3000/api/employees/1007
 //Invalid: http://localhost:3000/api/employees/foo
 //Invalid: http://localhost:3000/api/employees/9999
-router.get("/:empId", (req, res, next) =>{
+router.get("/:empId/tasks", (req, res, next) => {
   try {
-    let ( empId ) = req.params;
+    let { empId } = req.params;
     empId = parseInt(empId, 10);
+    //Error above? check to make sure syntax is correct
+    console.log()
 
-    //early return - design pattern
+    //checking to see if the returned value from parseInt is NaN
     if (isNaN(empId)) {
       console.error("Input must be a number");
       return next(createError(400, "input must be a number"));
@@ -51,10 +58,12 @@ module.exports = router;
  * @throws { 404 error } - if no tasks are found
  */
 
-RouteReuseStrategy.get('/:empId/tasks', (req, res, next) => {
+router.get('/:empId/tasks', (req, res, next) => {
   try {
     let { empId } = req.params;
     empId = parseInt(empId, 10);
+    //error above? checking syntax
+    console.log()
 
     //Check to determine if the returned value from parseInt is NaN
     if (isNaN(empId)) {
@@ -143,3 +152,106 @@ router.post('/:empId/tasks', (req, res, next) => {
     next(err);
   }
 });
+
+const tasksSchema = {
+  type: 'object',
+  required: ['todo', 'done'],
+  additionalProperties: false,
+  properties: {
+    todo: {
+      type: 'array',
+      items: {
+        type: 'object',
+        properties: {
+          _id: { type: 'string' },
+          text: { type: 'string' }
+        },
+      }
+    }
+  }
+};
+
+//Update task API
+router.put('/:empId/tasks', (req, res, next) =>{
+  try {
+
+    let { empId } = req.params;
+    empId = parseInt(empId, 10);
+
+    if (isNaN(empId)) {
+      return next(createError(400, 'Employee ID must be a number'))
+    }
+
+    mongo(async db => {
+      const employee = await db.collection('employees').findOne( { empId: empId } );
+      if (!employee) {
+        return next (createError(404, `Employee not found with empId ${empId}`));
+      }
+      const tasks = req.body;
+      const validator = ajv.compile(tasksSchema);
+      const valid = validator(tasks);
+      if(!valid) {
+        return next(createError(400,'Invalid task payload', validator.errors));
+      }
+      const result = await db.collection ('employees').updateOne(
+        { empId: empId },
+        { $set: {todo: tasks.todo, done: tasks.done }}
+      )
+      res.status(204).send();
+    }, next);
+  } catch (err) {
+    console.error('err', err);
+    next(err);
+  }
+});
+
+
+
+//Delete Task API
+router.delete('/:empId/tasks/:taskId', (req, res, next) =>{
+  try {
+    let { empId } = req.params;
+    let { taskId } = req.params;
+
+    empId = parseInt(empId, 10);
+
+    if (isNaN(empId)) {
+      return next(createError(400, 'Employee ID must be a number'));
+    }
+
+    mongo(async db => {
+      let emp = await db.collection('employees').findOne({ empId: empId });
+
+      if (!emp) {
+        return next(createError(404, `Employee not found with empId ${empId}`));
+      }
+
+      if (!emp.todo) emp.todo = [];
+      if (!emp.done) emp.done = [];
+
+      const todo = emp.todo.filter(t => t._id.toString() !==taskId.toString());
+      const done = emp.done.filter(t => t._id.toString() !==taskId.toString());
+
+      const result = await db.collection('employees').updateOne(
+        { empId: empId },
+        { $set: { todo: todo, done: done }}
+      )
+
+      res.status(204).send();
+    }, next);
+  } catch (err) {
+    console.error('err', err);
+    next(err);
+  }
+});
+
+module.exports = router // end.module.exports = router
+
+
+
+//check to see if tests are connecting to port 3000
+/**
+ * app.listen(3000, ()=>{
+ * console.log('Nodebucket is running on port 3000')
+ * })
+ */

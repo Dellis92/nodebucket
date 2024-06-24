@@ -1,6 +1,6 @@
 /**
  * Title: nav.component.ts
- * Author: Professor Krasso
+ * Author: Professor Krasso - DeVonte' Ellis
  * Date: 8/5/23
  */
 

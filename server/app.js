@@ -1,18 +1,19 @@
 /**
  * Title: app.js
- * Author: Professor Krasso
+ * Author: Professor Krasso - DeVonte Ellis
  * Date: 8/5/2023
  */
 'use strict'
 
 // Require statements
-const express = require('express')
-const createServer = require('http-errors')
-const path = require('path')
+const express = require('express');
+const createServer = require('http-errors');
+const path = require('path');
 const employeeRoute = require("./routes/employee-route");
 
 // Create the Express app
-const app = express()
+const app = express();
+exports.app = app;
 
 // Configure the app
 app.use(express.json())
